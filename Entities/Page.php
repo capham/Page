@@ -2,8 +2,9 @@
 
 namespace Modules\Page\Entities;
 
-use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+
+use Astrotomic\Translatable\Translatable;
 use Modules\Core\Traits\NamespacedEntity;
 use Modules\Media\Support\Traits\MediaRelation;
 use Modules\Tag\Contracts\TaggableInterface;
@@ -77,7 +78,7 @@ class Page extends Model implements TaggableInterface
         #i: No relation found, return the call to parent (Eloquent) to handle it.
         return parent::__call($method, $parameters);
     }
-    
+
     public function getImageAttribute()
     {
         $thumbnail = $this->files()->where('zone', 'image')->first();
