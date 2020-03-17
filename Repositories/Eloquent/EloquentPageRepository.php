@@ -2,6 +2,7 @@
 
 namespace Modules\Page\Repositories\Eloquent;
 
+use Illuminate\Support\Str;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -153,7 +154,7 @@ class EloquentPageRepository extends EloquentBaseRepository implements PageRepos
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
             $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
 
-            if (str_contains($request->get('order_by'), '.')) {
+            if (Str::contains($request->get('order_by'), '.')) {
                 $fields = explode('.', $request->get('order_by'));
 
                 $pages->with('translations')->join('page__page_translations as t', function ($join) {
