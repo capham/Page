@@ -3,6 +3,7 @@
 namespace Modules\Page\Providers;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Modules\Core\Events\BuildingSidebar;
 use Modules\Core\Events\CollectingAssets;
@@ -43,7 +44,7 @@ class PageServiceProvider extends ServiceProvider
         );
 
         $this->app['events']->listen(LoadingBackendTranslations::class, function (LoadingBackendTranslations $event) {
-            $event->load('pages', array_dot(trans('page::pages')));
+            $event->load('pages', Arr::dot(trans('page::pages')));
         });
 
         app('router')->bind('page', function ($id) {
