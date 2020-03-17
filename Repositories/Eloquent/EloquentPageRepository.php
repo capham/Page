@@ -3,6 +3,7 @@
 namespace Modules\Page\Repositories\Eloquent;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -54,7 +55,7 @@ class EloquentPageRepository extends EloquentBaseRepository implements PageRepos
      */
     public function create($data)
     {
-        if (array_get($data, 'is_home') === '1') {
+        if (Arr::get($data, 'is_home') === '1') {
             $this->removeOtherHomepage();
         }
 
@@ -63,7 +64,7 @@ class EloquentPageRepository extends EloquentBaseRepository implements PageRepos
 
         event(new PageWasCreated($page, $data));
 
-        $page->setTags(array_get($data, 'tags', []));
+        $page->setTags(Arr::get($data, 'tags', []));
 
         return $page;
     }
@@ -75,7 +76,7 @@ class EloquentPageRepository extends EloquentBaseRepository implements PageRepos
      */
     public function update($model, $data)
     {
-        if (array_get($data, 'is_home') === '1') {
+        if (Arr::get($data, 'is_home') === '1') {
             $this->removeOtherHomepage($model->id);
         }
 
@@ -84,7 +85,7 @@ class EloquentPageRepository extends EloquentBaseRepository implements PageRepos
 
         event(new PageWasUpdated($model, $data));
 
-        $model->setTags(array_get($data, 'tags', []));
+        $model->setTags(Arr::get($data, 'tags', []));
 
         return $model;
     }
